@@ -1,3 +1,4 @@
+const { Router } = require('express');
 const express=require('express');
 const router=express.Router();
 
@@ -8,5 +9,6 @@ router.get('/sign-in',usersController.signIn);
 router.use('/posts',require('./posts'));
 router.post('/create',usersController.create)
 router.post('/create-session' ,usersController.createSession);
+router.use('/sign-out' , usersController.signOut);
 //ye file kahi par import karani padegi isliye yaha se export ki hai
 module.exports=router;
