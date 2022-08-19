@@ -1,15 +1,33 @@
 const User=require('../models/user');
-module.exports.signUp=function(req,res){
 
+// let's keep it same as before
+module.exports.profile = function(req, res){
+    User.findById(req.params.id, function(err, user){
+        return res.render('user_profile', {
+            title: 'User Profile',
+            profile_user: user
+        });
+    });
+
+}
+
+module.exports.signUp=function(req,res){
+    if(req.isAuthenticated()){
+        return res.redirect('/users/profile');
+    }
     return res.render('user_sign_up');
 
 }
+
 module.exports.signIn=function(req,res){
+    if(req.isAuthenticated()){
+       return  res.redirect('/users/profile');
+    }
     //just printing the cookies on screen 
-    console.log(req.cookies);
+    // console.log(req.cookies);
     //setting up the cookies
-    res.cookie('user_id',25);
-    res.cookie('name','pheobe');
+    // res.cookie('user_id',25);
+    // res.cookie('name','pheobe');
     return res.render('user_sign_in');
 
 }
@@ -37,4 +55,9 @@ module.exports.create=function(req,res){
         }
         
     });
+}
+
+
+module.exports.createSession = function(req , res){
+    return res.redirect('/');
 }
